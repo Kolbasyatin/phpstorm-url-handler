@@ -8,13 +8,17 @@
 # @author Stefan Auditor <stefan.auditor@erdfisch.de>
 
 arg=${1}
-pattern=".*file(:\/\/|\=)(.*)&line=(.*)"
+pattern=".*host_dir=(.*)&docker_dir=(.*)&file(:\/\/|\=)(.*)&line=(.*)$"
 
 # Get the file path.
-file=$(echo "${arg}" | sed -r "s/${pattern}/\2/")
+rawFile=$(echo "${arg}" | sed -r "s/${pattern}/\4/")
+localPath=$(echo "${arg}" | sed -r "s/${pattern}/\1/")
+dockerPath=$(echo "${arg}" | sed -r "s/${pattern}/\2/")
 
 # Get the line number.
-line=$(echo "${arg}" | sed -r "s/${pattern}/\3/")
+line=$(echo "${arg}" | sed -r "s/${pattern}/\5/")
+#Change docker path to local path
+file=$(echo "${rawFile}" | sed "s:${dockerPath}:${localPath}:")
 
 # Check if phpstorm|pstorm command exist.
 if type phpstorm > /dev/null; then
