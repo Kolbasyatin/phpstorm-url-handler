@@ -1,3 +1,9 @@
+# Add Docker Usage
+
+Add to IDE config option `host_dir` and `docker_dir`
+
+    ide: "phpstorm://open?host_dir=%ide_project_host_dir%&docker_dir=%ide_project_docker_dir%&file=%%f&line=%%l"
+    
 # PhpStorm URL Handler
 
 This package contains a launcher to open files in PhpStorm at the defined line
